@@ -2,6 +2,7 @@
 using DatabasesProject1.Repositories.Interfaces;
 using DatabasesProject1.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace DatabasesProject1.Controllers
@@ -64,6 +65,47 @@ namespace DatabasesProject1.Controllers
         [HttpGet]
         public ActionResult Create() => View();
 
+        [HttpGet]
+        public ActionResult<Course> Details(string id)
+        {
+            var item = _materialsRepository.Find(id);
+            MaterialViewModel model;
+            switch (item)
+            {
+                case TextMaterial m:
+                    model = new MaterialViewModel()
+                    {
+                        MaterialId = item.MaterialId,
+                        MaterialName = item.MaterialName,
+                        Content = m.Content,
+                        ContentType = ContentType.Text,
+                    };
+                    break;
+                case FileMaterial m:
+                    model = new MaterialViewModel()
+                    {
+                        MaterialId = item.MaterialId,
+                        MaterialName = item.MaterialName,
+                        Content = m.FileUrl,
+                        ContentType = ContentType.Text,
+                    };
+                    break;
+                case VideoMaterial m:
+                    model = new MaterialViewModel()
+                    {
+                        MaterialId = item.MaterialId,
+                        MaterialName = item.MaterialName,
+                        Content = m.VideoUrl,
+                        ContentType = ContentType.Text,
+                    };
+                    break;
+                default:
+                    return BadRequest();
+            }
+
+            return View(model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult<MaterialBase> Create(MaterialViewModel item)
@@ -104,19 +146,89 @@ namespace DatabasesProject1.Controllers
         }
 
         [HttpGet]
-        public ActionResult<MaterialBase> Edit(string id) =>
-            View(_materialsRepository.Find(id));
+        public ActionResult<MaterialBase> Edit(string id)
+        {
+            var item = _materialsRepository.Find(id);
+            MaterialViewModel model;
+            switch (item)
+            {
+                case TextMaterial m:
+                    model = new MaterialViewModel()
+                    {
+                        MaterialId = item.MaterialId,
+                        MaterialName = item.MaterialName,
+                        Content = m.Content,
+                        ContentType = ContentType.Text,
+                    };
+                    break;
+                case FileMaterial m:
+                    model = new MaterialViewModel()
+                    {
+                        MaterialId = item.MaterialId,
+                        MaterialName = item.MaterialName,
+                        Content = m.FileUrl,
+                        ContentType = ContentType.Text,
+                    };
+                    break;
+                case VideoMaterial m:
+                    model = new MaterialViewModel()
+                    {
+                        MaterialId = item.MaterialId,
+                        MaterialName = item.MaterialName,
+                        Content = m.VideoUrl,
+                        ContentType = ContentType.Text,
+                    };
+                    break;
+                default:
+                    return BadRequest();
+            }
+
+            return View(model);
+        }
+            
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(MaterialBase item)
+        public ActionResult Edit(MaterialViewModel item)
         {
+            MaterialBase material;
+            switch (item.ContentType)
+            {
+                case ContentType.Text:
+                    material = new TextMaterial()
+                    {
+                        MaterialId = item.MaterialId,
+                        MaterialName = item.MaterialName,
+                        Content = item.Content,
+                    };
+                    break;
+                case ContentType.File:
+                    material = new FileMaterial()
+                    {
+                        MaterialId = item.MaterialId,
+                        MaterialName = item.MaterialName,
+                        FileUrl = item.Content,
+                    };
+                    break;
+                case ContentType.Video:
+                    material = new VideoMaterial()
+                    {
+                        MaterialId = item.MaterialId,
+                        MaterialName = item.MaterialName,
+                        VideoUrl = item.Content,
+                    };
+                    break;
+                default:
+                    return BadRequest();
+            }
+
             if (ModelState.IsValid)
             {
-                _materialsRepository.Update(item);
+                _materialsRepository.Update(material);
                 return RedirectToAction("Index");
             }
+
             return View(item);
         }
 
