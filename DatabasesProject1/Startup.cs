@@ -30,6 +30,7 @@ namespace DatabasesProject1
 
             services.Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)));
             services.AddSingleton<IDatabaseSettings>(x => x.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+
             services.AddScoped<ILanguagesRepository, LanguagesRepository>();
             services.AddScoped<ICoursesRepository, CoursesRepository>();
             services.AddScoped<IMaterialsRepository, MaterialsRepository>();

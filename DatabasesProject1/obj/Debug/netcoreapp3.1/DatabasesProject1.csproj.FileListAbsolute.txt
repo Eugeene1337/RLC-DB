@@ -434,3 +434,5 @@ C:\Users\zheny\source\repos\DatabasesProject1\DatabasesProject1\bin\Debug\netcor
 C:\Users\zheny\source\repos\DatabasesProject1\DatabasesProject1\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
 C:\Users\zheny\source\repos\DatabasesProject1\DatabasesProject1\obj\Debug\netcoreapp3.1\Razor\Views\Materials\Edit.cshtml.g.cs
 C:\Users\zheny\source\repos\DatabasesProject1\DatabasesProject1\obj\Debug\netcoreapp3.1\Razor\Views\Materials\Details.cshtml.g.cs
+C:\Users\zheny\source\repos\DatabasesProject1\DatabasesProject1\obj\Debug\netcoreapp3.1\Razor\Views\CoursesMaterials\Index.cshtml.g.cs
+C:\Users\zheny\source\repos\DatabasesProject1\DatabasesProject1\obj\Debug\netcoreapp3.1\Razor\Views\CoursesMaterials\Success.cshtml.g.cs
